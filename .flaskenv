@@ -1,0 +1,2 @@
+FLASK_APP=udrive.py
+FLASK_DEBUG=1
