@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///udrive.db"
 app.config['SECRET_KEY'] = "This is super secret"
 
-app.register_blueprint(drive)
+app.register_blueprint(drive, url_prefix='/d')
 app.register_blueprint(auth, url_prefix='/auth')
 
 
