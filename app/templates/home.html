@@ -8,6 +8,15 @@
     Create Folder
 </button>
 
+<div aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {%for path in paths%}
+            <li class="breadcrumb-item" aria-current="page"><a href="{{url_for('drive.index', id=path['id'])}}" >{{path['name']}}</a></li>
+        {%endfor%}
+    </ol>
+</div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="create_folder_modal" tabindex="-1"  aria-hidden="true">
   <div class="modal-dialog">

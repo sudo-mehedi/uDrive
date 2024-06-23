@@ -26,7 +26,8 @@ def index(id=None):
         
     else:
         subfolders = Folders.query.filter_by(parent_id=id)
-    return render_template('home.html', subfolders=subfolders, id=id)
+        path = Folders.get_path_with_ids(id)
+    return render_template('home.html', subfolders=subfolders, id=id, paths=path)
 
 
 @drive.route('/create_folder', methods=["POST"])
