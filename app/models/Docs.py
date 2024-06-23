@@ -16,3 +16,11 @@ class Folders(db.Model):
 #     username: Mapped[str] = mapped_column(unique=True)
 #     email: Mapped[str]
 #     password: Mapped[str]
+
+
+
+
+
+
+
+

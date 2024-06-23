@@ -1,0 +1,28 @@
+
+{% extends 'base.html'%}
+{%block content %}
+<form action="{{url_for('auth.login')}}" method="post">
+    {{ form.csrf_token }}
+
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        <ul class="errors">
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+            <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <div class="mb-3">
+        {{form.username.label(class='form-label')}}
+        {{ form.username(size=20, class='form-control')}}
+    </div>
+    <div class="mb-3">
+        {{form.password.label(class='form-label')}}
+        {{ form.password(class='form-control')}}
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+{%endblock%}

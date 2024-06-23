@@ -1,22 +1,23 @@
 from flask import Flask
-from app.models import db
 from flask_migrate import Migrate
 from app.views.drive import drive
-
-
+from app.views.auth import auth
+from app.models import db
+from app.login import login_manager
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///udrive.db"
-
+app.config['SECRET_KEY'] = "This is super secret"
 
 app.register_blueprint(drive)
+app.register_blueprint(auth, url_prefix='/auth')
+
 
 
 def create_app():
     db.init_app(app)
-
     migrate = Migrate(app, db)
-
+    login_manager.init_app(app) 
     return app
 
 
