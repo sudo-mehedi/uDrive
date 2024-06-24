@@ -14,13 +14,18 @@ def register():
     form = RegForm()
     if form.validate_on_submit() and request.method == "POST":
         users = Users(username=form.username.data, email=form.email.data, password=form.password.data)
-        folder = Folders(name=form.username.data, user_root=form.username.data, parent_id=0)
         try:
-            db.session.add_all([users, folder])
+            db.session.add_all([users])
+            db.session.commit()
+            users = Users.query.filter_by(username=form.username.data).first()
+            print(users)
+            folder = Folders(name='root', user_root=users.username, parent_id=0, created_by=users.id)
+            db.session.add(folder)
             db.session.commit()
             flash("Registration Success", category='success')
             return redirect(url_for('auth.login'))
-        except:
+        except Exception as e:
+            print(e)
             print("Error")
     return render_template('register.html', form=form)
 

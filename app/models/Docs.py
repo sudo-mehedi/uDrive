@@ -10,6 +10,7 @@ class Folders(db.Model):
     parent = relationship("Folders", back_populates="children", remote_side=[id])
     user_root:Mapped[str] = mapped_column(nullable=True)
 
+    created_by:Mapped[int]
 
 
     @classmethod
@@ -30,11 +31,3 @@ class Folders(db.Model):
 #     username: Mapped[str] = mapped_column(unique=True)
 #     email: Mapped[str]
 #     password: Mapped[str]
-
-
-
-
-
-
-
-
