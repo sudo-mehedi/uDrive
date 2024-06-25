@@ -8,15 +8,8 @@
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
   </head>
   <body>
-    <nav class="navbar bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand">uDrive</a>
-        <div class="d-flex">
-          Logout
-        </div>
-      </div>
-    </nav>
     <div class="container my-5">
+    
       {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
       {% for category, message in messages %}
