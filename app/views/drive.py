@@ -25,14 +25,15 @@ def index(id=None):
         username = current_user.username
         folders = Folders.query.filter_by(user_root=username).first_or_404()
         id = folders.id
-        subfolders = Folders.query.filter_by(parent_id=folders.id).filter_by(created_by=current_user.id).all()
+        
+        subfolders = Folders.query.filter_by(parent_id=folders.id).filter_by(created_by=current_user.id)
         files = Files.query.filter_by(parent_id=folders.id).filter_by(created_by=current_user.id)
     else:
 
-        subfolders = Folders.query.filter_by(parent_id=id).filter_by(created_by=current_user.id).all()
+        subfolders = Folders.query.filter_by(parent_id=id).filter_by(created_by=current_user.id)
         files = Files.query.filter_by(parent_id=id).filter_by(created_by=current_user.id)
-
     path = Folders.get_path_with_ids(id)
+
     return render_template('home.html', subfolders=subfolders, id=id, paths=path, files=files)
 
 
@@ -46,6 +47,7 @@ def create_folder():
                             created_by=current_user.id)
         db.session.add(new_folder) 
         db.session.commit()
+        flash("Folder created", category="success")
         return redirect(url_for('drive.index', id=parent_id))
     else:
         return abort(404)
