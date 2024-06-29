@@ -54,6 +54,7 @@ def create_folder():
 
 
 from werkzeug.utils import secure_filename
+from app.utils.file_name import unique_name
 import os
 
 @drive.route('/upload_file', methods=['POST'])
@@ -67,10 +68,11 @@ def upload_file():
             flash('Please Select a file', category="danger")
         if file:
             filename = secure_filename(file.filename)
-            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            ufilename = unique_name(filename)
+            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], ufilename))
             new_file = Files(parent_id=request.form['parent_id'], 
                             name=filename, 
-                            path=os.path.join(current_app.config['UPLOAD_FOLDER'], filename),
+                            path=ufilename,
                             created_by=current_user.id
                         ) 
             db.session.add(new_file)
@@ -78,3 +80,17 @@ def upload_file():
             flash("File upload sucessful", category="success")
         
     return redirect(url_for('drive.index', id=request.form['parent_id']))
+
+
+from flask import send_from_directory
+
+@drive.route('/<id>/download')
+@login_required
+def download(id=None):
+    if id == None:
+        return abort(404)
+    
+    file = Files.query.filter_by(created_by=current_user.id).filter_by(id=id).first()
+    if file is None or file is []:
+        return abort(404)
+    return send_from_directory('./uploads', file.path, as_attachment=True)

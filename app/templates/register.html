@@ -1,4 +1,10 @@
 {% extends 'base.html'%}
+
+
+{%block title%}
+    Register - uDrive
+{%endblock%}
+
 {%block content %}
 <form action="{{url_for('auth.register')}}" method="post">
     {{ form.csrf_token }}
