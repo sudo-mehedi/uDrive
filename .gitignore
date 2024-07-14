@@ -6,8 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
-app/uploads/
-uploads/
+app/uploads/*
+uploads/*
 # Distribution / packaging
 .Python
 build/
