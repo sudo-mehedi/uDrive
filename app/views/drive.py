@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, abort, flash
+from flask import Blueprint, render_template, request, redirect, url_for, abort, flash, Response
 from flask_login import login_required, current_user
 from app.models.Docs import Folders
 from app.models import db
@@ -94,3 +94,22 @@ def download(id=None):
     if file is None or file is []:
         return abort(404)
     return send_from_directory('./uploads', file.path, as_attachment=True)
+
+
+
+
+@drive.route("/delete", methods=["POST"])
+@login_required
+def delete_files_folders():
+    _type = request.form.get('type')
+    _id = request.form.get('id')
+    print(_type, _id)
+    if _type == 'folder':
+        do = Folders.query.filter_by(created_by=current_user.id).filter_by(id=_id).first()
+        db.session.delete(do)
+        db.session.commit()
+    elif _type == 'file':
+        do = Files.query.filter_by(created_by=current_user.id).filter_by(id=_id).first()
+        db.session.delete(do)
+        db.session.commit()
+    return Response("", headers={"HX-Refresh": "true"})
