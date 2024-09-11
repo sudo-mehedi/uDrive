@@ -4,7 +4,8 @@ uDrive - Micro Drive - A minimal Google Drive clone.
 1. Clone/Download this project. If you download it extract it.
 2. If your operating system is Windows, run the script named run-windows.bat or If you are on Linux/Mac, run-linux.sh with proper permission.  The application will start on localhost:80. You can change the port by editing .bat/.sh script.
 3. If you get any error during file upload just create a directory inside app. `app/uploads`
-4. 
+
+
 ## Images:
 
 ![Login Page](https://i.ibb.co.com/xs7VtRF/image.png "Login Page")
